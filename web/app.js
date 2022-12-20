@@ -371,9 +371,16 @@ const PDFViewerApplication = {
    * @private
    */
   async _initializeL10n() {
+    const hash = document.location.hash.substring(1);
+    const hashParams = parseQueryString(hash);
+
     this.l10n = this.externalServices.createL10n(
       typeof PDFJSDev === "undefined" || PDFJSDev.test("!PRODUCTION || GENERIC")
-        ? { locale: AppOptions.get("locale") }
+        ? {
+            locale: hashParams.has("locale")
+              ? hashParams.get("locale")
+              : AppOptions.get("locale"),
+          }
         : null
     );
     const dir = await this.l10n.getDirection();

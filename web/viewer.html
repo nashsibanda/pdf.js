@@ -73,7 +73,7 @@ See https://github.com/adobe-type-tools/cmap-resources
     <div id="outerContainer">
 
       <div id="sidebarContainer">
-        <div id="toolbarSidebar">
+        <div id="toolbarSidebar" style="display: none; height: 0;">
           <div id="toolbarSidebarLeft">
             <div id="sidebarViewButtons" class="splitToolbarButton toggled" role="radiogroup">
               <button id="viewThumbnail" class="toolbarButton toggled" title="Show Thumbnails" tabindex="2" data-l10n-id="thumbs" role="radio" aria-checked="true" aria-controls="thumbnailView">
@@ -101,7 +101,7 @@ See https://github.com/adobe-type-tools/cmap-resources
             </div>
           </div>
         </div>
-        <div id="sidebarContent">
+        <div id="sidebarContent" style="top: 0;">
           <div id="thumbnailView">
           </div>
           <div id="outlineView" class="hidden">
@@ -284,7 +284,7 @@ See https://github.com/adobe-type-tools/cmap-resources
                   <span data-l10n-id="toggle_sidebar_label">Toggle Sidebar</span>
                 </button>
                 <div class="toolbarButtonSpacer"></div>
-                <button id="viewFind" class="toolbarButton" title="Find in Document" tabindex="12" data-l10n-id="findbar" aria-expanded="false" aria-controls="findbar">
+                <button id="viewFind" class="toolbarButton" title="Find in Document" tabindex="12" data-l10n-id="findbar" aria-expanded="false" aria-controls="findbar" style="display: none;">
                   <span data-l10n-id="findbar_label">Find</span>
                 </button>
                 <div class="splitToolbarButton hiddenSmallView">
@@ -299,7 +299,7 @@ See https://github.com/adobe-type-tools/cmap-resources
                 <input type="number" id="pageNumber" class="toolbarField" title="Page" value="1" min="1" tabindex="15" data-l10n-id="page" autocomplete="off">
                 <span id="numPages" class="toolbarLabel"></span>
               </div>
-              <div id="toolbarViewerRight">
+              <div id="toolbarViewerRight" style="display: none;">
 <!--#if GENERIC-->
                 <button id="openFile" class="toolbarButton hiddenLargeView" title="Open File" tabindex="31" data-l10n-id="open_file">
                   <span data-l10n-id="open_file_label">Open</span>
