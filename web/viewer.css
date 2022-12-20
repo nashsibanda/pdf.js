@@ -843,19 +843,6 @@ body {
   transform: scaleX(var(--dir-factor));
 }
 
-#secondaryToolbarToggle::before {
-  mask-image: var(--toolbarButton-secondaryToolbarToggle-icon);
-  transform: scaleX(var(--dir-factor));
-}
-
-#findPrevious::before {
-  mask-image: var(--findbarButton-previous-icon);
-}
-
-#findNext::before {
-  mask-image: var(--findbarButton-next-icon);
-}
-
 #previous::before {
   mask-image: var(--toolbarButton-pageUp-icon);
 }
@@ -1104,14 +1091,7 @@ a:focus > .thumbnail > .thumbnailSelectionRing,
   width: 0;
   color: rgba(255, 255, 255, 0.5);
 }
-.treeItemToggler::before {
-  inset-inline-end: 4px;
-  mask-image: var(--treeitem-expanded-icon);
-}
-.treeItemToggler.treeItemsHidden::before {
-  mask-image: var(--treeitem-collapsed-icon);
-  transform: scaleX(var(--dir-factor));
-}
+
 .treeItemToggler.treeItemsHidden ~ .treeItems {
   display: none;
 }
