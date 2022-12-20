@@ -39,6 +39,7 @@ const webpackStream = require("webpack-stream");
 const Vinyl = require("vinyl");
 const vfs = require("vinyl-fs");
 const through = require("through2");
+require("dotenv").config();
 
 const BUILD_DIR = "build/";
 const L10N_DIR = "l10n/";
@@ -110,6 +111,8 @@ const DEFINES = Object.freeze({
   LIB: false,
   IMAGE_DECODERS: false,
 });
+
+const HATS_DIR = process.env.HATS_DIR;
 
 function transform(charEncoding, transformFunction) {
   return through.obj(function (vinylFile, enc, done) {
@@ -724,20 +727,32 @@ function createBuildNumber(done) {
           buildCommit = stdout2.replace("\n", "");
         }
 
-        createStringSource(
-          "version.json",
-          JSON.stringify(
-            {
-              version,
-              build: buildNumber,
-              commit: buildCommit,
-            },
-            null,
-            2
-          )
-        )
-          .pipe(gulp.dest(BUILD_DIR))
-          .on("end", done);
+        exec(
+          "git rev-parse --abbrev-ref HEAD",
+          function (err3, stdout3, stderr3) {
+            let branchName = "";
+            if (!err3) {
+              branchName = stdout3.replace("\n", "");
+            }
+            config.buildNumber = buildNumber;
+
+            createStringSource(
+              "version.json",
+              JSON.stringify(
+                {
+                  version,
+                  build: buildNumber,
+                  commit: buildCommit,
+                  branch: branchName,
+                },
+                null,
+                2
+              )
+            )
+              .pipe(gulp.dest(BUILD_DIR))
+              .on("end", done);
+          }
+        );
       });
     }
   );
@@ -1233,6 +1248,42 @@ gulp.task(
       done();
     }
   )
+);
+
+async function copyBuildToDir(source_dir, dest_dir) {
+  fs.copyFileSync(
+    source_dir + "/web/viewer.css",
+    dest_dir + "/hats/core/static/pdfjs/viewer.css"
+  );
+  fs.copyFileSync(
+    source_dir + "/web/viewer.html",
+    dest_dir + "/hats/core/static/pdfjs/viewer.html"
+  );
+  fs.copyFileSync(
+    source_dir + "/web/pdf.viewer.js",
+    dest_dir + "/hats/core/static/pdfjs/pdf.viewer.js"
+  );
+  fs.copyFileSync(
+    source_dir + "/build/pdf.worker.js",
+    dest_dir + "/hats/core/static/pdfjs/pdf.worker.js"
+  );
+  fs.copyFileSync(
+    BUILD_DIR + "version.json",
+    dest_dir + "/hats/core/static/pdfjs/version.json"
+  );
+}
+
+gulp.task(
+  "minified-hats",
+  gulp.series("minified-legacy", async function copyToHats(done) {
+    if (!HATS_DIR) {
+      console.log("HATS_DIR env variable not set!");
+      console.log("Set HATS_DIR to the root of your local hats repo.");
+    } else {
+      await copyBuildToDir(MINIFIED_LEGACY_DIR, HATS_DIR);
+    }
+    done();
+  })
 );
 
 function preprocessDefaultPreferences(content) {
