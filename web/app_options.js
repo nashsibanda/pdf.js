@@ -185,7 +185,7 @@ const defaultOptions = {
   },
   viewOnLoad: {
     /** @type {boolean} */
-    value: 0,
+    value: 1,
     kind: OptionKind.VIEWER + OptionKind.PREFERENCE,
   },
 
