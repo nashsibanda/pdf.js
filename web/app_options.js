@@ -199,7 +199,7 @@ const defaultOptions = {
     value:
       typeof PDFJSDev === "undefined" || !PDFJSDev.test("PRODUCTION")
         ? "../external/bcmaps/"
-        : "../web/cmaps/",
+        : "./cmaps/",
     kind: OptionKind.API,
   },
   disableAutoFetch: {
@@ -262,7 +262,7 @@ const defaultOptions = {
     value:
       typeof PDFJSDev === "undefined" || !PDFJSDev.test("PRODUCTION")
         ? "../external/standard_fonts/"
-        : "../web/standard_fonts/",
+        : "./standard_fonts/",
     kind: OptionKind.API,
   },
   verbosity: {
